@@ -13,19 +13,14 @@ builder.Services.AddDbContext<AppDbContext>(opt =>
     );
 });
 
+builder.Services.AddCors();
+
 // Learn more about configuring OpenAPI
 builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.MapOpenApi();
-}
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
+app.UseCors();
 
 app.MapControllers();
 
