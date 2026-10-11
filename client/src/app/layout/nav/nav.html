@@ -18,9 +18,12 @@
 
         <!-- Navigation Links -->
         <div class="hidden md:flex items-center space-x-5 text-xs font-semibold tracking-wider text-indigo-200/90 uppercase">
-          <a href="#" class="hover:text-white transition-colors py-1">Matches</a>
-          <a href="#" class="hover:text-white transition-colors py-1">Lists</a>
-          <a href="#" class="hover:text-white transition-colors py-1">Messages</a>
+          @if (accountService.currentUser()) {
+<a routerLink="/members" class="hover:text-white transition-colors py-1">Matches</a>
+          <a routerLink="/lists" class="hover:text-white transition-colors py-1">Lists</a>
+          <a routerLink="/messages" class="hover:text-white transition-colors py-1">Messages</a>
+          }
+          
         </div>
       </div>
 
