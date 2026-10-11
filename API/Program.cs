@@ -18,7 +18,18 @@ builder.Services.AddDbContext<AppDbContext>(opt =>
     );
 });
 
-builder.Services.AddCors();
+// Configure CORS Policy
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("CorsPolicy", policy =>
+    {
+        policy.WithOrigins("http://localhost:4200", "https://localhost:4200")
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials();
+    });
+});
+
 builder.Services.AddScoped<ITokenService, TokenService>();
 
 // 1. TEACH THE APP HOW TO VERIFY JWT TOKENS
@@ -32,21 +43,21 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         {
             ValidateIssuerSigningKey = true,
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenKey)),
-            ValidateIssuer = false,   // We don't have an external issuer URL yet
-            ValidateAudience = false  // We don't have an audience URL yet
+            ValidateIssuer = false,
+            ValidateAudience = false
         };
     });
 
-// Learn more about configuring OpenAPI
 builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
-app.UseCors();
+// Use the named CORS policy
+app.UseCors("CorsPolicy");
 
-// 2. STATION THE BOUNCER IN THE PIPELINE (Order matters!)
-app.UseAuthentication(); // Who are you? (reads the token)
-app.UseAuthorization();  // Are you allowed in? (checks [Authorize])
+// Authentication & Authorization (Order matters!)
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllers();
 
