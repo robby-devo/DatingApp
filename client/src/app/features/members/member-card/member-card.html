@@ -1,0 +1,50 @@
+<div class="card bg-base-100/10 border border-white/10 hover:border-indigo-500/50 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 group">
+  
+  <!-- Image Container (Clickable) -->
+  <div class="relative aspect-square overflow-hidden bg-slate-900">
+    <a [routerLink]="['/members', member().id]" class="block w-full h-full cursor-pointer">
+      <img 
+        [src]="member().imageUrl || '/assets/user.png'" 
+        [alt]="member().displayName"
+        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+      />
+    </a>
+
+    <!-- Action Overlay -->
+    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-4 gap-2 pointer-events-none">
+      <!-- View Profile Button -->
+      <a 
+        [routerLink]="['/members', member().id]" 
+        class="btn btn-circle btn-sm bg-white/20 hover:bg-white text-white hover:text-slate-900 border-0 backdrop-blur-md transition-colors pointer-events-auto"
+        title="View Profile">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+        </svg>
+      </a>
+
+      <!-- Like Button -->
+      <button 
+        type="button"
+        class="btn btn-circle btn-sm bg-rose-500/80 hover:bg-rose-500 text-white border-0 backdrop-blur-md transition-colors pointer-events-auto"
+        title="Like Profile">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 fill-current" viewBox="0 0 24 24">
+          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Card Body -->
+  <div class="p-3 text-center space-y-1">
+    <!-- Clickable Name Link -->
+    <h3 class="font-bold text-sm text-white truncate group-hover:text-indigo-400 transition-colors">
+      <a [routerLink]="['/members', member().id]" class="hover:underline cursor-pointer">
+        {{ member().displayName }}
+      </a>
+    </h3>
+    <p class="text-xs text-slate-400 truncate">
+      {{ member().city }}, {{ member().country }}
+    </p>
+  </div>
+
+</div>

@@ -1,1 +1,21 @@
-<p>member-list works!</p>
+<div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8 space-y-8">
+  <!-- Page Header -->
+  <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-white/10 pb-6">
+    <div>
+      <h1 class="text-3xl font-extrabold text-white tracking-tight">Your Matches</h1>
+      <p class="text-sm text-slate-400 mt-1">Discover and connect with members based on your preferences</p>
+    </div>
+  </div>
+
+  <!-- Parent-to-Child Members Grid -->
+  <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+    @for (member of members$ | async; track member.id) {
+      <app-member-card [member]="member"></app-member-card>
+    } @empty {
+      <div class="col-span-full py-16 text-center text-slate-400">
+        <span class="loading loading-spinner loading-lg text-indigo-500"></span>
+        <p class="mt-4 text-sm">Loading matches...</p>
+      </div>
+    }
+  </div>
+</div>
