@@ -1,1 +1,131 @@
-<p>member-detailed works!</p>
+@if (member) {
+  <div class="min-h-[calc(100vh-64px)] bg-gradient-to-b from-slate-950 via-indigo-950/40 to-slate-900 py-8 px-4 sm:px-6 lg:px-8 space-y-6">
+    <div class="max-w-6xl mx-auto space-y-6">
+
+      <!-- Back to Matches Button -->
+      <div>
+        <a routerLink="/members" class="btn btn-ghost btn-sm text-indigo-300 hover:text-white hover:bg-white/10 rounded-xl gap-2 transition-all">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          </svg>
+          Back to Matches
+        </a>
+      </div>
+
+      <!-- Main Profile Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+
+        <!-- Left Column: Member Card -->
+        <div class="md:col-span-1 space-y-4">
+          <div class="card bg-slate-900/80 border border-white/10 rounded-3xl overflow-hidden shadow-2xl backdrop-blur-xl">
+            
+            <!-- Photo -->
+            <div class="relative aspect-square overflow-hidden bg-slate-950">
+              <img 
+                [src]="member.imageUrl || '/assets/user.png'" 
+                [alt]="member.displayName"
+                class="w-full h-full object-cover" 
+              />
+              <div class="absolute bottom-3 left-3">
+                <span class="badge badge-success badge-sm gap-1.5 text-white font-medium py-2 px-2.5 shadow-lg shadow-success/30">
+                  <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+                  Online
+                </span>
+              </div>
+            </div>
+
+            <!-- Profile Info -->
+            <div class="p-5 space-y-4 text-white">
+              <div>
+                <h2 class="text-xl font-extrabold text-white tracking-tight">{{ member.displayName }}</h2>
+                <p class="text-xs text-indigo-300 flex items-center gap-1 mt-0.5">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
+                  </svg>
+                  {{ member.city }}, {{ member.country }}
+                </p>
+              </div>
+
+              <div class="divider my-1 border-white/10"></div>
+
+              <div class="space-y-2.5 text-xs text-slate-300">
+                <div class="flex justify-between">
+                  <span class="text-slate-400">Gender:</span>
+                  <span class="font-semibold text-white capitalize">{{ member.gender }}</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-slate-400">Date of Birth:</span>
+                  <span class="font-semibold text-white">{{ member.dateOfBirth }}</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-slate-400">Member Since:</span>
+                  <span class="font-semibold text-white">{{ member.created | date: 'mediumDate' }}</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-slate-400">Last Active:</span>
+                  <span class="font-semibold text-white">{{ member.lastActive | date: 'mediumDate' }}</span>
+                </div>
+              </div>
+
+              <!-- Buttons -->
+              <div class="pt-3 flex gap-2">
+                <a routerLink="messages" class="btn btn-primary flex-1 btn-sm rounded-xl gap-1.5 bg-indigo-600 hover:bg-indigo-500 border-0 shadow-lg shadow-indigo-500/25 text-white font-semibold">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                  </svg>
+                  Message
+                </a>
+                <button class="btn btn-outline btn-error btn-sm rounded-xl hover:!text-white" title="Like Profile">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 fill-current" viewBox="0 0 24 24">
+                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                  </svg>
+                </button>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Tabs & Routed Child Views -->
+        <div class="md:col-span-2 lg:col-span-3 space-y-4">
+          <!-- Tab Navigation -->
+          <div role="tablist" class="tabs tabs-boxed bg-slate-900/80 border border-white/10 p-1.5 rounded-2xl backdrop-blur-xl flex gap-1">
+            <a 
+              role="tab" 
+              routerLink="profile" 
+              routerLinkActive="!bg-indigo-600 !text-white font-semibold shadow-lg shadow-indigo-600/30" 
+              class="tab flex-1 py-2 rounded-xl text-slate-300 hover:text-white transition-all text-sm">
+              About
+            </a>
+            <a 
+              role="tab" 
+              routerLink="photos" 
+              routerLinkActive="!bg-indigo-600 !text-white font-semibold shadow-lg shadow-indigo-600/30" 
+              class="tab flex-1 py-2 rounded-xl text-slate-300 hover:text-white transition-all text-sm">
+              Photos
+            </a>
+            <a 
+              role="tab" 
+              routerLink="messages" 
+              routerLinkActive="!bg-indigo-600 !text-white font-semibold shadow-lg shadow-indigo-600/30" 
+              class="tab flex-1 py-2 rounded-xl text-slate-300 hover:text-white transition-all text-sm">
+              Messages
+            </a>
+          </div>
+
+          <!-- Outlet for Active Child Tab Component -->
+          <div class="p-8 rounded-3xl bg-slate-900/80 border border-white/10 shadow-2xl backdrop-blur-xl text-white min-h-[300px]">
+            <router-outlet />
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+} @else {
+  <div class="min-h-[calc(100vh-64px)] bg-slate-950 flex flex-col items-center justify-center text-slate-400 gap-3">
+    <span class="loading loading-spinner loading-lg text-indigo-500"></span>
+    <p class="text-sm">Loading member profile...</p>
+  </div>
+}
